@@ -1,16 +1,16 @@
-name: chat-in-issue
-run-name: '[chat-in-issue][${{ github.workflow }}] - ${{ github.event.issue.title }}'
+name: security-buddy
+run-name: '[security-buddy][${{ github.workflow }}] - ${{ github.event.issue.title }}'
 on:
-  issues:
+  pull_request:
     types: ['opened']
   issue_comment:
     types: ['created']
 jobs:
-  chat-in-issue:
-    if: ${{ !github.event.issue.pull_request }}
+  security-buddy:
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
-      - uses: wkgcass/chat-in-issue@v1
+      - uses: DryRunSec/security_buddy@v1
         with:
           openai-key: ${{ secrets.OPENAI_KEY }}
           user-whitelist: ${{ vars.CHAT_IN_ISSUE_USER_WHITELIST }}
